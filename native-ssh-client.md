@@ -7,12 +7,14 @@ For now, this will just be a loose collection of facts I have found over time re
     1. Clear out any existing versions of OpenSSH on your system in case you ever dabbled with Microsoft's beta version or similar using an admin powershell:  
        ```Remove-WindowsCapability -Online -Name OpenSSH.Client```  
        ```Remove-WindowsCapability -Online -Name OpenSSH.Server```
-    2. Reboot
-    3. Use the Windows Optional Features GUI to install OpenSSH-Client and OpenSSH-Server (it feels like the server-component is required at the moment, but haven't thoroughly tested this)
-    4. Reboot
+    2. Reboot (yes, even if the shell output sais otherwise)
+    3. Use the Windows Optional Features GUI to install OpenSSH-Client and OpenSSH-Server (yes, server-component is required for ssh-agent for some reason)
+    4. Reboot (yes, even if the shell output sais otherwise)
     5. Run ```ssh -V``` in a powershell to check successful installation. Result should be smth like  
+       ```OpenSSH_for_Windows_9.5p1, LibreSSL 3.8.2```  
+       If instead you get smth like the output below, you will need to go look for other installed OpenSSH-Versions and uninstall them. Most likely they will be found in control panel > apps  
        ```OpenSSH_for_Windows_9.8p1 Win32-OpenSSH-GitHub, LibreSSL 3.9.2```
-    6. Start and enable services in an admin powershell:
+    7. Start and enable services in an admin powershell:
        ```
        # Set the sshd service to be started automatically.
        Get-Service -Name sshd | Set-Service -StartupType Automatic
